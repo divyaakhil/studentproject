@@ -1,0 +1,33 @@
+{% extends 'navbar.html' %}
+{% block content %}
+<style>
+    form{
+        text-align: center;
+    }
+</style>
+<form action="{% url 'editdb' student.id %}" method="post">
+    {% csrf_token %}
+    <h3>Update Student Details</h3><br>
+    <label>Student Name</label>
+    <input type="text" name="studentname" value="{{student.studentname}}"><br><br>
+    <label>Student Address</label>
+    <input type="text" name="address" value="{{student.address}}"><br><br>
+    <label>Student Age</label>
+    <input type="number" name="age" value="{{student.age}}"><br><br>
+    <label>Joining Date</label>
+    <input type="date" name="jdate" value="{{student.jdate|date:'y-m-d'}}"><br><br>
+    <label>Courses</label>
+    <select name="sel" id="">
+        {% for c in course %}
+        {% if c.coursename == student.course.coursename %}
+        <option value="{{c.id}}" selected>{{c.coursename}}</option>
+        {% else %}
+        <option value="{{c.id}}">{{c.coursename}}</option>
+        {% endif %}
+        {% endfor %}
+    </select><br><br>
+    <label>Course Fee</label>
+    <input type="number" name="coursefee" value="{{student.course.coursefee}}"><br><br>    
+    <button type="submit" class="btn btn-info mt-3">edit</button>
+
+{% endblock %}
